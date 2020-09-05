@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" ref="aaa">
+  <div class="wrapper">
     <ul class="content">
       <li>列表1</li>
       <li>列表2</li>
@@ -126,16 +126,25 @@
       // })
     },
     mounted() {
-      this.scroll = new BScroll(document.querySelector('.wrapper',{
+      this.scroll = new BScroll(document.querySelector('.wrapper'), {
+        probeType: 3,
+        pullUpLoad: true
+      });
 
-      }))
+      this.scroll.on('scroll', (position) => {
+        console.log(position);
+      });
+
+      this.scroll.on('pullingUp',() => {
+        console.log('上拉加载更多');
+      })
     }
 
   }
 </script>
 
 <style scoped>
-  .wrapper{
+  .wrapper {
     height: 150px;
     background-color: red;
     overflow: hidden;
