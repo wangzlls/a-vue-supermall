@@ -1,6 +1,8 @@
 <template>
   <div id="home">
-    <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
+    <nav-bar class="home-nav">
+      <div slot="center">购物街</div>
+    </nav-bar>
     <tab-control :titles="['流行','新款','精选']"
                  @tabClick="tabClick"
                  ref="tabControl1"
@@ -64,13 +66,27 @@
         currentType: 'pop',
         isShowBackTop: false,
         tabOffsetTop: 0,
-        isTabFixed:false
+        isTabFixed: false
       }
     },
     computed: {
       showGoods() {
         return this.goods[this.currentType].list
       }
+    },
+    destroyed() {
+      //这个函数在首页离开时就会销毁
+      console.log('home destroyed');
+    },
+    activated() {
+      //这个函数当处在首页时才会创建
+      this.$refs.scroll.scrollTo(0, this.saveY, 0);
+      this.$refs.scroll.refresh()
+    },
+    deactivated() {
+      //当首页不活跃时才会调用
+      this.saveY = this.$refs.scroll.getScrollY();
+      // console.log(this.saveY);
     },
     created() {
       //1.请求多个数据
@@ -176,7 +192,7 @@
     left: 0;
   }
 
-  .tab-control{
+  .tab-control {
     position: relative;
     z-index: 9;
   }
