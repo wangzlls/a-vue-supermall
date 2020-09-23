@@ -20,6 +20,7 @@
 
 <style scoped>
   .nav-bar {
+    /*弹性布局，最大限度利用空间*/
     display: flex;
     height: 44px;
     line-height: 44px;

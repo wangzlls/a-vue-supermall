@@ -14,7 +14,9 @@
             @scroll="contentScroll"
             :pull-up-load="true"
             @pullingUp="loadMore">
+      <!-- 导航栏的轮播图 -->
       <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"/>
+      <!-- 导航栏下面的推荐内容 -->
       <recommend-view :recommends="recommends"/>
       <feature-view/>
       <tab-control :titles="['流行','新款','精选']"
@@ -32,14 +34,14 @@
   import RecommendView from "./childComps/RecommendView";
   import FeatureView from "./childComps/FeatureView";
 
-  import NavBar from "../../components/common/navbar/NavBar";
-  import TabControl from "../../components/content/tabControl/TabControl";
-  import GoodsList from "../../components/content/goods/GoodsList";
-  import Scroll from "../../components/common/scroll/Scroll";
-  import BackTop from "../../components/content/backTop/BackTop";
+  import NavBar from "components/common/navbar/NavBar";
+  import TabControl from "components/content/tabControl/TabControl";
+  import GoodsList from "components/content/goods/GoodsList";
+  import Scroll from "components/common/scroll/Scroll";
+  import BackTop from "components/content/backTop/BackTop";
 
-  import {getHomeMultidata, getHomeGoods} from "../../network/home";
-  import {debounce} from "common/utils";
+  import { getHomeMultidata, getHomeGoods } from "network/home";
+  import { debounce } from "common/utils";
 
 
   export default {
@@ -98,7 +100,7 @@
     },
     mounted() {
       //1.图片加载完成的事件监听
-      const refresh = debounce(this.$refs.scroll.refresh, 200);
+      const refresh = debounce(this.$refs.scroll.refresh, 500);
       this.$bus.$on('itemImageLoad', () => {
         refresh()
       });
@@ -109,6 +111,7 @@
        */
 
       tabClick(index) {
+        //此处返回 流行 新款 精选 的下标，通过swich选择下标值
         switch (index) {
           case 0:
             this.currentType = 'pop';
@@ -124,6 +127,7 @@
       },
       backClick() {
         //通过$refs拿到scroll组件，再通过组件中scroll属性的方法回到顶部
+        //scrollTo:三个参数，第一个X轴，第二个Y轴，第三个时间，此处写死了，回到顶部
         this.$refs.scroll.scrollTo(0, 50, 1000)
       },
       contentScroll(position) {
@@ -137,6 +141,7 @@
         this.getHomeGoods(this.currentType)
       },
       swiperImageLoad() {
+        //通过this.$refs.tabControl2.$el.offsetTop 拿到组件的offsetTop值
         this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
       },
       /**
@@ -144,12 +149,17 @@
        */
       getHomeMultidata() {
         getHomeMultidata().then(res => {
+          console.log('res-------->',res)
           // this.result = res
+          
+          //获取轮播图中的数据
           this.banners = res.data.banner.list;
+          console.log('this.banners-------->',this.banners)
+          //获取轮播图下面四张图片的数据
           this.recommends = res.data.recommend.list;
         })
       },
-      getHomeGoods(type,) {
+      getHomeGoods(type) {
         const page = this.goods[type].page + 1;
         getHomeGoods(type, page).then(res => {
 

@@ -28,12 +28,12 @@
 <script>
   import TabBar from "../../common/tabbar/TabBar";
   import TabBarItem from "../../common/tabbar/TabBarItem";
+
   export default {
     name: "MainTabBar",
-    components: {TabBarItem, TabBar},
-    component:{
-      TabBar,
-      TabBarItem
+    components: {
+      TabBarItem,
+      TabBar
     }
   }
 </script>

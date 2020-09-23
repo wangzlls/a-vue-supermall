@@ -2,14 +2,16 @@
   <div class="tab-control">
     <div v-for="(item,index) in titles"
          class="tab-control-item"
-         :class="{active:index ===currentIndex}"
-          @click="itemClick(index)">
+         :class="{active:index === currentIndex}"
+          @click="itemClick(index)"
+          :key="index">
       <span>{{item}}</span>
     </div>
   </div>
 </template>
 
 <script>
+  //流行，新款，精选三个按钮的组件
   export default {
     name: "TabControl",
     props: {
