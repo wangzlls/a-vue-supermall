@@ -10,7 +10,8 @@
       <detail-commend-info ref="comment" :comment-info="commentInfo"></detail-commend-info>
       <goods-list ref="recommend" :goods="reCommends"/>
     </scroll>
-    <detail-button-bar/>
+    <detail-bottom-bar @addToCart="addToCart"/>
+    <back-top @click.native="backClick" v-show="isShowBackTop"/>
   </div>
 </template>
 
@@ -22,13 +23,13 @@
   import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
   import DetailParamInfo from "./childComps/DetailParamInfo";
   import DetailCommendInfo from './childComps/DetailCommendInfo';
-  import DetailButtonBar from "./childComps/DetailButtonBar";
+  import DetailBottomBar from "./childComps/DetailBottomBar";
 
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from 'components/content/goods/GoodsList'
 
   import {getDetail, Goods, Shop, GoodsParam, getRecommend} from 'network/detail'
-  import {itemListenerMixin} from "../../common/mixin";
+  import {itemListenerMixin,backTopMixin} from "../../common/mixin";
   import {debounce} from "../../common/utils";
 
   export default {
@@ -41,7 +42,7 @@
       DetailGoodsInfo,
       DetailParamInfo,
       DetailCommendInfo,
-      DetailButtonBar,
+      DetailBottomBar,
       Scroll,
       GoodsList
     },
@@ -123,7 +124,7 @@
     },
     updated() {
     },
-    mixins: [itemListenerMixin],
+    mixins: [ itemListenerMixin, backTopMixin ],
     destroyed() {
       this.$bus.$off('itemImgLoad', this.itemImagListener)
     },
@@ -160,6 +161,19 @@
         //   }
         // }
 
+        this.isShowBackTop = postionY > 1000;
+      },
+      addToCart() {
+        //1.点击以后给product添加值
+        const product = {};
+        product.image = this.topImages[0];
+        product.title = this.goods.title;
+        product.desc = this.goods.desc;
+        product.price = this.goods.nowPrice;
+        product.iid = this.iid;
+        //2.通过mutations给state赋值
+        // this.$store.commit('addCart',product)
+        this.$store.dispatch('addCart',product)
       }
     }
   }

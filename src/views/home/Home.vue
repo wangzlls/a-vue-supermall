@@ -43,7 +43,6 @@
   import { getHomeMultidata, getHomeGoods } from "network/home";
   import { debounce } from "common/utils";
 
-
   export default {
     name: "Home",
     components: {
@@ -133,7 +132,6 @@
       contentScroll(position) {
         //1.判断BackTop是否显示
         this.isShowBackTop = (-position.y) > 1000;
-
         //2.决定tabControl是否吸顶设置 position:fixed
         this.isTabFixed = (-position.y) > this.tabOffsetTop
       },
@@ -148,20 +146,24 @@
        * 网络请求的相关方法
        */
       getHomeMultidata() {
+        //获取轮播图中的数据
         getHomeMultidata().then(res => {
           console.log('res-------->',res)
           // this.result = res
-          
+          // console.log(res);
+
           //获取轮播图中的数据
           this.banners = res.data.banner.list;
-          console.log('this.banners-------->',this.banners)
+          // console.log('this.banners-------->',this.banners)
           //获取轮播图下面四张图片的数据
           this.recommends = res.data.recommend.list;
         })
       },
+
       getHomeGoods(type) {
         const page = this.goods[type].page + 1;
         getHomeGoods(type, page).then(res => {
+          console.log(res);
 
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
