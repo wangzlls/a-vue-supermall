@@ -30,7 +30,7 @@
 
 <style scoped>
   .cart-list {
-    height: calc(100% - 100px);
+    height: calc(100% - 140px);
   }
   .content {
     height: 100%;

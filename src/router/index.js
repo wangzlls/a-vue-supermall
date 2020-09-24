@@ -8,7 +8,7 @@ const Cart = () => import('../views/cart/Cart');
 const Profile = () => import('../views/profile/Profile');
 const Detail = () => import('../views/detail/Detail');
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -37,10 +37,10 @@ const routes = [
     path: '/detail/:iid',
     component:Detail
   }
-]
+];
 const router = new VueRouter({
   routes,
   mode:'history'
-})
+});
 
 export default router
