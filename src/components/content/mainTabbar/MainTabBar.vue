@@ -16,7 +16,7 @@
         <img slot="item-icon-active" src="~assets/img/tabbar/shopcart_active.svg" alt="">
         <div slot="item-text">购物车</div>
       </tab-bar-item>
-      <tab-bar-item path="profile">
+      <tab-bar-item path="/profile">
         <img slot="item-icon" src="~assets/img/tabbar/profile.svg" alt="">
         <img slot="item-icon-active" src="~assets/img/tabbar/profile_active.svg" alt="">
         <div slot="item-text">我的</div>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+  // import TabBar from "common/tabbar/TabBar";
+  // import TabBarItem from "common/tabbar/TabBarItem";
   import TabBar from "../../common/tabbar/TabBar";
   import TabBarItem from "../../common/tabbar/TabBarItem";
 

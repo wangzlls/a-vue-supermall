@@ -1,5 +1,5 @@
 export function debounce(func,delay) {
-  //防抖操作，类似于延时
+  //防抖操作，类似于延时，防止短时间内多次操作
   let timer = null;
   return function (...args) {
     if (timer) clearTimeout(timer);
@@ -10,6 +10,12 @@ export function debounce(func,delay) {
 }
 
 export function formatDate(date, fmt) {
+  //格式化日期
+  /*
+  * 用法：
+  * 第一个值：date,传入时间戳，
+  * 第二个值：传入值：‘YYYY-MM-DD’   如果之传入YY则返回后面的年份。
+  * */
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
   }
@@ -27,8 +33,7 @@ export function formatDate(date, fmt) {
     }
   }
   return fmt;
-};
-
+}
 function padLeftZero (str) {
   return ('00' + str).substr(str.length);
-};
+}

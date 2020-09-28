@@ -1,5 +1,7 @@
 import {debounce} from './utils'
 import BackTop from "components/content/backTop/BackTop";
+//mixin混入，将重复性的代码放在这里，用法：在实例中mixin这个对象
+
 
 export const itemListenerMixin = {
   data() {

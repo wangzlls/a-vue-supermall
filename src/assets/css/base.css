@@ -1,7 +1,18 @@
 @import "./normalize.css";
 
+/**
+一般在项目中都会引用github上的normalize.css的一个文件
+它具有：
+  保护有用的浏览器 样式而不是去掉他们。
+  一般化的样式： 为大部分HTML元素提供。
+  修复浏览器自身的bug 并保证各浏览器的一致性。
+  优化css可用性： 用一些小技巧。
+  解释代码： 用注释和详细的文档来。
+*/
+
 /*:root -> 获取根元素html*/
 :root {
+  /*css中定义变量*/
   --color-text: #666;
   --color-high-text: #ff5777;
   --color-tint: #ff8198;
