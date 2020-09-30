@@ -63,7 +63,7 @@
         this.scroll && this.scroll.scrollTo(x*1, y*1, time)
       },
       refresh() {
-        console.log('+++++');
+        // console.log('+++++');
         this.scroll && this.scroll.refresh()
       },
       finishPullUp() {

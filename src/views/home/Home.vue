@@ -77,7 +77,7 @@
     },
     destroyed() {
       //这个函数在首页离开时就会销毁
-      console.log('home destroyed');
+      // console.log('home destroyed');
     },
     activated() {
       //这个函数当处在首页时才会创建
