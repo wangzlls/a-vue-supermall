@@ -1,4 +1,4 @@
-// 轮播图下面的四个按钮
+<!--轮播图下面的四个按钮-->
 <template>
   <div class="recommend">
     <div v-for="(item,index) in recommends" :key="index" class="recommend-item">

@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <!-- <goods-list-item v-for="item in goods" :goods-item="item"/> -->
+    <!-- 通过v-for 遍历出goods-item，-->
     <goods-list-item
     v-for="(item,index) in goods"
     :key="index"
@@ -32,7 +32,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-
     padding: 2px;
   }
 </style>

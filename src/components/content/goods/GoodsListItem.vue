@@ -1,5 +1,6 @@
 <template>
   <div class="goods-item" @click="itemClick">
+<!--    @load监听图片加载-->
     <img :src="showImage" alt @load="imageLoad" />
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -27,11 +28,12 @@ export default {
   },
   methods: {
     imageLoad() {
+      //在子组件中的GoodsListItem中的图片加载完成后，发射出一个事件。
       this.$bus.$emit("itemImageLoad");
       // console.log(this.$bus);
     },
     itemClick() {
-      // console.log('跳转到详情页');
+      // console.log('跳转到详情页'); 路由跳转不仅有push，还有replace
       this.$router.push("/detail/" + this.goodsItem.iid);
       // this.$router.push('/detail/')
     },
@@ -43,6 +45,7 @@ export default {
 .goods-item {
   padding-bottom: 40px;
   position: relative;
+  /**此处不能直接设置为px，不让在不同的设备中的比例不相同，不能完美适配**/
   width: 48%;
 }
 

@@ -25,6 +25,10 @@
     components:{
       CheckButton
     },
+    data() {
+      return {
+      }
+    },
     computed:{
       ...mapGetters(['cartList']),
       totalPrice() {
@@ -54,9 +58,12 @@
         }
       },
       calcClick() {
-        //当购物车中选中的商品为0时：
-        if (this.checkLength === 0) {
-          this.$toast.show('请选择购买的商品',2000)
+        //当购物车中选中的商品为0时：（看了淘宝以后，发现并没有这种显示，索性直接替换为点击后显示两个支付图片）
+        // if (this.checkLength === 0) {
+        //   this.$toast.show('请选择购买的商品',2000)
+        // }
+        if (this.checkLength !== 0) {
+          this.$emit('changeShow')
         }
       }
     }

@@ -21,7 +21,7 @@ export function request(config) {
     console.log(err);
   });
 
-  //3.发送真正的网络请求
+  //3.发送真正的网络请求（返回的是一个Promise，以后地方拿数据直接.then就行）
   return instance(config)
 
 }

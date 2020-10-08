@@ -10,8 +10,8 @@
 
 <script>
   // import {Swiper,SwiperItem} from 'components/common/swiper'
-  import Swiper from '../../../components/common/swiper/Swiper'
-  import SwiperItem from '../../../components/common/swiper/SwiperItem'
+  import Swiper from 'components/common/swiper/Swiper'
+  import SwiperItem from 'components/common/swiper/SwiperItem'
 
   export default {
     name: "HomeSwiper",
@@ -35,6 +35,7 @@
     methods: {
       imageLoad() {
         if (!this.isLoad) {
+          //监听轮播图中的一张图片加载，当一张图片加载完毕后，发射出一个事件，让Home中判断tabControl的offsetTop
           this.$emit('swiperImageLoad');
           this.isLoad = true
         }

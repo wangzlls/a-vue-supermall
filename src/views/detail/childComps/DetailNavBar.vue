@@ -10,7 +10,8 @@
 				:key="index"
 				@click="titleClick(index)"
 				:class="{active:index === currentIndex}"
-				class="title-item">{{item}}
+				class="title-item">
+          {{item}}
 				</div>
       </div>
     </nav-bar>

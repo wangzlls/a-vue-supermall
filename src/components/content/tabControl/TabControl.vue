@@ -1,10 +1,11 @@
+<!--流行，新款，精选三个按钮的组件-->
 <template>
   <div class="tab-control">
     <div v-for="(item,index) in titles"
          class="tab-control-item"
          :class="{active:index === currentIndex}"
-          @click="itemClick(index)"
-          :key="index">
+         @click="itemClick(index)"
+         :key="index">
       <span>{{item}}</span>
     </div>
   </div>
@@ -30,7 +31,8 @@
     methods: {
       itemClick(index) {
         this.currentIndex = index;
-        this.$emit('tabClick',index)
+        //此处将组件中的 流行，新款，精选 三个按钮点击的index传递出去。
+        this.$emit('tabClick', index)
       }
     }
   }
@@ -50,7 +52,7 @@
     flex: 1;
   }
 
-  .tab-control-item span{
+  .tab-control-item span {
     padding-bottom: 5px;
   }
 

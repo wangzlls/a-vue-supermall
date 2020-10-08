@@ -10,7 +10,7 @@ import VueLazyload from 'vue-lazyload'
 
 Vue.config.productionTip = false
 
-//添加事件总线
+//添加事件总线，相当于将$bus添加到Vue实例上面。
 Vue.prototype.$bus = new Vue()
 
 //安装自己封装的toast插件

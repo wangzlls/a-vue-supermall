@@ -22,6 +22,7 @@
       <tab-control :titles="['流行','新款','精选']"
                    @tabClick="tabClick"
                    ref="tabControl2"/>
+<!--      请求商品数据-->
       <goods-list :goods="showGoods"/>
     </scroll>
 
@@ -72,6 +73,8 @@
     },
     computed: {
       showGoods() {
+        //通过计算属性的方式来获取pop,new,sell的值，避免在goods-list中写入大量的代码
+        //此处的currentType通过下面的tabClick改变的switch的值而改变。
         return this.goods[this.currentType].list
       }
     },
@@ -90,7 +93,12 @@
       // console.log(this.saveY);
     },
     created() {
-      //1.请求多个数据
+      /**
+       * 当页面开始加载时就开始请求获取轮播图的数据以及商品中的pop，new,sell的数据。
+       * 在created中不建议直接写具体的方法实现
+       * 最好是封装到methods里面，在created中调用下面的方法。
+       * **/
+      //1.请求轮播图数据，此处来自network中的home.js
       this.getHomeMultidata();
       //2.请求商品数据
       this.getHomeGoods('pop');
@@ -98,8 +106,10 @@
       this.getHomeGoods('sell');
     },
     mounted() {
+      //已经完成模板渲染或el对应的html已经渲染
       //1.图片加载完成的事件监听
       const refresh = debounce(this.$refs.scroll.refresh, 500);
+      //通过事件总线拿到GoodsListItem中发射出来的方法，然后在此处每次刷新
       this.$bus.$on('itemImageLoad', () => {
         refresh()
       });
@@ -108,9 +118,8 @@
       /**
        * 事件监听的方法
        */
-
       tabClick(index) {
-        //此处返回 流行 新款 精选 的下标，通过swich选择下标值
+        //此处返回 流行 新款 精选 的下标，通过switch选择下标值，改变data中currentType中的值。
         switch (index) {
           case 0:
             this.currentType = 'pop';
@@ -125,7 +134,7 @@
         this.$refs.tabControl2.currentIndex = index;
       },
       backClick() {
-        //通过$refs拿到scroll组件，再通过组件中scroll属性的方法回到顶部
+        //由于设置了ref，所以能通过$refs拿到scroll组件，再通过组件中scroll对象的方法回到顶部
         //scrollTo:三个参数，第一个X轴，第二个Y轴，第三个时间，此处写死了，回到顶部
         this.$refs.scroll.scrollTo(0, 50, 1000)
       },
@@ -136,10 +145,12 @@
         this.isTabFixed = (-position.y) > this.tabOffsetTop
       },
       loadMore() {
+        //在Scroll组件中拿到了PullingUp方法，当调用该方法时，回调下面的getHomeGoods方法，并传入'pop' or 'new' or 'sell'的值
         this.getHomeGoods(this.currentType)
       },
       swiperImageLoad() {
-        //通过this.$refs.tabControl2.$el.offsetTop 拿到组件的offsetTop值
+        /*通过this.$refs.tabControl2.$el.offsetTop 拿到组件的offsetTop值
+        所有的组件都有一个$el值，这个值就是组件中的元素*/
         this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
       },
       /**
@@ -149,8 +160,6 @@
         //获取轮播图中的数据
         getHomeMultidata().then(res => {
           console.log('res-------->',res)
-          // this.result = res
-          // console.log(res);
 
           //获取轮播图中的数据
           this.banners = res.data.banner.list;
@@ -161,11 +170,13 @@
       },
 
       getHomeGoods(type) {
+        //在此处设置变量page,防止下面的getHomeGoods中的page写死，由于上面data中的page为0，所以此处+1
         const page = this.goods[type].page + 1;
         getHomeGoods(type, page).then(res => {
           // console.log(res);
-
+          //三个点（...是将拿到的list中的数据一一进行解析，然后push到上面goods中的空list中）
           this.goods[type].list.push(...res.data.list);
+          //每一次调用此方法时，page变量都+1
           this.goods[type].page += 1;
 
           //完成上拉加载更多

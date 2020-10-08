@@ -35,9 +35,13 @@
     mounted() {
       //mouted函数，在页面创建完成后调用。
       //创建SColl对象
+      //此处通过this,$refs,wrapper拿到对应的标签，Vue中不建议使用原生的DOM。
       this.scroll = new BScoll(this.$refs.wrapper, {
+        //在scroll中的点击事件默认为false,不能点击，此处需要重新设置为true
         click: true,
+        //设置scroll开启的模式，
         probeType: this.probeType,
+        //上拉事件，
         pullUpLoad: this.pullUpLoad
       });
 
@@ -46,6 +50,7 @@
         //position是BScoll的默认参数，可以直接调用
         this.scroll.on('scroll', (position) => {
           // console.log(position);
+          //在scroll中监听scroll的position，并发射出去
           this.$emit('scroll', position)
         });
       }
@@ -53,13 +58,15 @@
       if (this.pullUpLoad) {
         this.scroll.on('pullingUp', () => {
           //pullingUp是BScoll 的默认方法，可以直接调用
-          // console.log('监听到滚到底部');
+          //当加载到底部的时候，将此方法发射到Home组件中。
           this.$emit('pullingUp')
         })
       }
     },
     methods: {
       scrollTo(x, y, time) {
+        //当存在scroll对象时，才执行，
+        //后面x,y * 1 是为了避免在Home中传值时，变为字符串类型导致报错，此处乘以1后，便成为了Number类型
         this.scroll && this.scroll.scrollTo(x*1, y*1, time)
       },
       refresh() {
